@@ -1,19 +1,23 @@
+//Query selectors
 const container = document.querySelector(".container");
 const search = document.querySelector(".search-box button");
 const weatherBox = document.querySelector(".weather-box");
 const weatherDetails = document.querySelector(".weather-details");
 const error404 = document.querySelector(".not-found");
 
+// Event listener for search button
 search.addEventListener('click', () => {
-    const APIKey = "5725729ee85800c0d793ae2b58a38d14";
+    const APIKey = "5725729ee85800c0d793ae2b58a38d14"; // https://openweathermap.org/api
     const city = document.querySelector(".search-box input").value;
 
-    if(city === "")
+    if(city === ""){
         return;
+    }
 
+    // Parses city's name and APIKey
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${APIKey}`).then(response => response.json()).then(json => {
         
-    if(json.cod ==="404"){
+    if(json.cod ==="404"){ //Invalid
             container.style.height = "400px";
             weatherBox.style.display ="none";
             weatherDetails.style.display = "none";
@@ -31,6 +35,7 @@ search.addEventListener('click', () => {
         const humidity = document.querySelector(".weather-details .humidity span");
         const wind = document.querySelector(".weather-details .wind span");
 
+        //Cases for displaying images
         switch(json.weather[0].main){
             case 'Clear':
                 image.src = "images/clear.png";
@@ -56,11 +61,13 @@ search.addEventListener('click', () => {
                 image.src = ""
         }
 
+        //Outputs, temperature, weather description, humidity and windspeed
         temperature.innerHTML = `${parseInt(json.main.temp)}<span>°C</span>`;
         description.innerHTML = `${json.weather[0].description}`;
         humidity.innerHTML = `${json.main.humidity}%`
         wind.innerHTML = `${parseInt(json.wind.speed)}Km/H`
 
+        //If valid, display box and add animation
         weatherBox.style.display = "";
         weatherDetails.style.display = "";
         weatherBox.classList.add("fadeIn");

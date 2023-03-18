@@ -8,7 +8,6 @@ const error404 = document.querySelector(".not-found");
 // Event listener for search button
 search.addEventListener('click', () => {
     const APIKey = //Put your API key in here--> https://openweathermap.org/api
-    ;
     const city = document.querySelector(".search-box input").value;
 
     if(city === ""){
